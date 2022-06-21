@@ -13,6 +13,7 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService
   ) {}
+
   async signup(dto: AuthDto) {
     const hash = await argon.hash(dto.password);
 
@@ -48,7 +49,7 @@ export class AuthService {
       }
     });
 
-    if (!user) throw new ForbiddenException('Credentials incorrenct');
+    if (!user) throw new ForbiddenException('Credentials incorrect');
 
     const pwMatches = await argon.verify(user.hash, dto.password);
 
