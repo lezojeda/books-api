@@ -1,8 +1,8 @@
 {
   "name": "books-api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "API for the books webapp",
+  "author": "Luz Ojeda",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -77,5 +77,9 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": "16.x"
   }
+
 }

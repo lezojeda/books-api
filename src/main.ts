@@ -11,6 +11,10 @@ async function bootstrap() {
   );
   app.enableCors();
 
-  await app.listen(3333);
+  let port = process.env.PORT;
+  if (port == null || port == '') {
+    port = '3333';
+  }
+  await app.listen(process.env.PORT);
 }
 bootstrap();
