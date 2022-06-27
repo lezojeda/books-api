@@ -28,7 +28,10 @@ export class AuthService {
           email: dto.email,
           hash,
           firstName,
-          lastName
+          lastName,
+          booksRead: [],
+          wantsToRead: [],
+          currentlyReading: []
         }
       });
       delete user.hash;

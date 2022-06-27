@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength
+} from 'class-validator';
 
 export class AuthDto {
   @IsNotEmpty({ message: 'E-mail should not be empty' })
@@ -9,6 +16,16 @@ export class AuthDto {
   @IsNotEmpty({ message: 'Password should not be empty' })
   @MinLength(8, { message: 'Password must have a minimum of 8 characters' })
   password: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(30)
+  firstName: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(30)
+  lastName: string;
 }
 
 export class GoogleAuthDto {
