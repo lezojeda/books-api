@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { AuthDto } from './dto';
+import { AuthDto, GoogleAuthDto } from './dto';
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../prisma/prisma.service';
@@ -14,14 +14,21 @@ export class AuthService {
     private config: ConfigService
   ) {}
 
-  async signup(dto: AuthDto) {
-    const hash = await argon.hash(dto.password);
+  async signup(dto: AuthDto | GoogleAuthDto) {
+    let hash: string;
+    let firstName: string;
+    let lastName: string;
 
+    if ('password' in dto) hash = await argon.hash(dto.password);
+    if ('firstName' in dto) firstName = dto.firstName;
+    if ('lastName' in dto) lastName = dto.lastName;
     try {
       const user = await this.prisma.user.create({
         data: {
           email: dto.email,
-          hash
+          hash,
+          firstName,
+          lastName
         }
       });
       delete user.hash;
@@ -43,11 +50,7 @@ export class AuthService {
   }
 
   async signin(dto: AuthDto) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: dto.email
-      }
-    });
+    const user = await this.checkUserExists(dto.email);
 
     if (!user) throw new ForbiddenException('Credentials incorrect');
 
@@ -75,5 +78,13 @@ export class AuthService {
     return {
       access_token
     };
+  }
+
+  async checkUserExists(email: string) {
+    return await this.prisma.user.findUnique({
+      where: {
+        email
+      }
+    });
   }
 }
