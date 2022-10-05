@@ -1,11 +1,26 @@
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Requirements
+* Docker
+* Node v16.x
 
 ## Installation
 
+Install dependencies:
 ```bash
 $ npm install
+```
+
+### Database setup
+
+1. With docker running, execute:
+
+```bash
+$ npm run db:dev:up
+```
+
+2. Run migrations with:
+
+```bash
+$ npm run prisma:dev:deploy
 ```
 
 ## Running the app

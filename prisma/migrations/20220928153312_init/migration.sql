@@ -7,6 +7,9 @@ CREATE TABLE "users" (
     "hash" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
+    "booksRead" TEXT[],
+    "wantsToRead" TEXT[],
+    "currentlyReading" TEXT[],
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
