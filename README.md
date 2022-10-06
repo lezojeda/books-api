@@ -1,6 +1,6 @@
-## Requirements
-* Docker
-* Node v16.x
+## System requirements
+* Docker ^20.x
+* Node ^16.x
 
 ## Installation
 
@@ -17,7 +17,9 @@ $ npm install
 $ npm run db:dev:up
 ```
 
-2. Run migrations with:
+2. Make sure to have the .env variables set
+
+3. Run migrations with:
 
 ```bash
 $ npm run prisma:dev:deploy
@@ -35,6 +37,10 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## Postman Collection
+
+Access the latest snapshot of the API's Postman collection using [this link](https://www.getpostman.com/collections/37f79a420b3d4b023c2d)
 
 ## Test
 
