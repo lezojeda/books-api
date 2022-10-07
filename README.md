@@ -22,7 +22,7 @@ $ npm run db:dev:up
 3. Run migrations with:
 
 ```bash
-$ npm run prisma:dev:deploy
+$ npm run prisma:migrate:dev
 ```
 
 ## Running the app
