@@ -26,5 +26,4 @@ model User {
   currentlyReading String[]
 
   @@map("users")
-  @@index([firstName])
 }

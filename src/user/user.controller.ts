@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common'
 import { User } from '@prisma/client'
-import { GetUserFromRequest } from '../auth/decorator'
+import { GetUserFromRequest } from '../decorators'
 import { JwtGuard } from '../auth/guard'
 import { EditUserDto } from './dto/editUserDto'
 import { UserService } from './user.service'
@@ -14,11 +14,11 @@ export class UserController {
     return user
   }
 
-  @Put(':id')
+  @Put()
   updateUser(
     @GetUserFromRequest('email') userEmail: string,
     @Body() dto: EditUserDto
   ) {
-    return this.userService.updateUser(userEmail)
+    return this.userService.updateUser(userEmail, dto)
   }
 }
