@@ -5,14 +5,17 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { PrismaService } from '../prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
+import { BaseService } from 'src/base.service'
 
 @Injectable({})
-export class AuthService {
+export class AuthService extends BaseService {
   constructor(
-    private prisma: PrismaService,
+    prisma: PrismaService,
     private jwt: JwtService,
     private config: ConfigService
-  ) {}
+  ) {
+    super(prisma)
+  }
 
   async signup(dto: AuthDto | GoogleAuthDto) {
     let hash: string
@@ -81,13 +84,5 @@ export class AuthService {
     return {
       access_token,
     }
-  }
-
-  async checkUserExists(email: string) {
-    return await this.prisma.user.findUnique({
-      where: {
-        email,
-      },
-    })
   }
 }
