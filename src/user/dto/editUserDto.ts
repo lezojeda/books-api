@@ -1,10 +1,4 @@
-import {
-  IsArray,
-  isArray,
-  IsEmail,
-  IsOptional,
-  IsString,
-} from 'class-validator'
+import { IsArray, IsEmail, IsOptional, IsString } from 'class-validator'
 
 export class EditUserDto {
   @IsEmail()

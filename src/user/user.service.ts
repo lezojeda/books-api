@@ -1,4 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { BaseService } from 'src/base.service'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { EditUserDto } from './dto/editUserDto'
@@ -10,18 +11,29 @@ export class UserService extends BaseService {
   }
 
   async updateUser(email: string, dto: EditUserDto) {
-    console.log(dto)
     if (await this.checkUserExists(email)) {
-      const updatedUser = await this.prisma.user.update({
-        where:{
-          email,
-        },
-        data: {
-          ...dto
+      try {
+        const updatedUser = await this.prisma.user.update({
+          where: {
+            email,
+          },
+          data: {
+            ...dto,
+          },
+        })
+        delete updatedUser.hash
+        return updatedUser
+      } catch (error) {
+        /**
+         * P2002 = Unique constraint failed (trying to use an already in-use email)
+         */
+        if (
+          error instanceof PrismaClientKnownRequestError &&
+          error.code === 'P2002'
+        ) {
+          throw new ForbiddenException('Credentials taken')
         }
-      })
-
-      return updatedUser
+      }
     } else {
       throw new ForbiddenException('Data incorrect')
     }
