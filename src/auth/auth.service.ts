@@ -6,6 +6,7 @@ import { PrismaService } from '../prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
 import { BaseService } from 'src/base.service'
+import { User } from '@prisma/client'
 
 @Injectable({})
 export class AuthService extends BaseService {
@@ -64,16 +65,16 @@ export class AuthService extends BaseService {
 
     if (!pwMatches) throw new ForbiddenException('Credentials incorrect')
 
-    return this.signToken(user.id, user.email)
+    return this.signToken(user)
   }
 
-  async signToken(
-    userId: number,
-    email: string
-  ): Promise<{ access_token: string }> {
+  async signToken(user: User): Promise<{ access_token: string }> {
     const payload = {
-      sub: userId,
-      email,
+      sub: user.id,
+      email: user.email,
+      booksRead: user.booksRead,
+      wantsToRead: user.wantsToRead,
+      currentlyReading: user.currentlyReading,
     }
 
     const access_token = await this.jwt.signAsync(payload, {
