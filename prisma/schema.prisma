@@ -21,8 +21,8 @@ model User {
   firstName String?
   lastName  String?
 
-  booksRead String[]
-  wantsToRead String[]
+  booksRead        String[]
+  wantsToRead      String[]
   currentlyReading String[]
 
   @@map("users")
