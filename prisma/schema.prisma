@@ -21,9 +21,15 @@ model User {
   firstName String?
   lastName  String?
 
-  booksRead        String[]
-  wantsToRead      String[]
-  currentlyReading String[]
+  books Book[]
 
   @@map("users")
+}
+
+model Book {
+  id        Int    @id @default(autoincrement())
+  bookId    String
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
+  readState String
 }

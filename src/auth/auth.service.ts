@@ -33,9 +33,6 @@ export class AuthService extends BaseService {
           hash,
           firstName,
           lastName,
-          booksRead: [],
-          wantsToRead: [],
-          currentlyReading: [],
         },
       })
       delete user.hash
@@ -72,9 +69,6 @@ export class AuthService extends BaseService {
     const payload = {
       sub: user.id,
       email: user.email,
-      booksRead: user.booksRead,
-      wantsToRead: user.wantsToRead,
-      currentlyReading: user.currentlyReading,
     }
 
     const access_token = await this.jwt.signAsync(payload, {

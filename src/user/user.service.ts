@@ -1,4 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common'
+import { User } from '@prisma/client'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { BaseService } from 'src/base.service'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -8,6 +9,23 @@ import { EditUserDto } from './dto/editUserDto'
 export class UserService extends BaseService {
   constructor(prisma: PrismaService) {
     super(prisma)
+  }
+
+  async getMe(user: User) {
+    if (await this.checkUserExists(user.email)) {
+      const books = await this.prisma.book.findMany({
+        where: {
+          userId: user.id,
+        },
+      })
+
+      return {
+        books,
+        ...user,
+      }
+    } else {
+      throw new ForbiddenException('Data incorrect')
+    }
   }
 
   async updateUser(email: string, dto: EditUserDto) {
