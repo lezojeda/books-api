@@ -6,7 +6,7 @@ import { PrismaService } from '../prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
 import { BaseService } from 'src/base.service'
-import { User } from '@prisma/client'
+import { Book, User } from '@prisma/client'
 
 @Injectable({})
 export class AuthService extends BaseService {
@@ -62,13 +62,20 @@ export class AuthService extends BaseService {
 
     if (!pwMatches) throw new ForbiddenException('Credentials incorrect')
 
-    return this.signToken(user)
+    const books = await this.prisma.book.findMany({
+      where: {
+        userId: user.id,
+      },
+    })
+
+    return this.signToken(user, books)
   }
 
-  async signToken(user: User): Promise<{ access_token: string }> {
+  async signToken(user: User, books: Book[]): Promise<{ access_token: string }> {
     const payload = {
       sub: user.id,
       email: user.email,
+      books
     }
 
     const access_token = await this.jwt.signAsync(payload, {
