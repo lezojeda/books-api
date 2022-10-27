@@ -1,5 +1,5 @@
-import { Book } from './editUserDto'
 import { User } from '@prisma/client'
+import { BookDto } from 'src/book/dto/BookDto'
 
 export class UserDto implements User {
   id: number
@@ -9,5 +9,5 @@ export class UserDto implements User {
   hash: string | null
   firstName: string | null
   lastName: string | null
-  books?: Book[]
+  books?: BookDto[]
 }

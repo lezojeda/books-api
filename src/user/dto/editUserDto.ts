@@ -1,9 +1,4 @@
-import { Type } from 'class-transformer'
-import { IsArray, IsEmail, IsOptional, IsString, ValidateNested } from 'class-validator'
-
-export class Book  {
-  [bookId: string]: 'read' | 'currentlyReading' | 'wantsToRead'
-}
+import { IsEmail, IsOptional, IsString } from 'class-validator'
 
 export class EditUserDto {
   @IsEmail()
@@ -17,10 +12,4 @@ export class EditUserDto {
   @IsString()
   @IsOptional()
   lastName?: string
-
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Book)
-  books?: Book[]
 }

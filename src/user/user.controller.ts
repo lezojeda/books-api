@@ -9,6 +9,7 @@ import { UserService } from './user.service'
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
+
   @Get('me')
   getMe(@GetUserFromRequest() user: User) {
     return this.userService.getMe(user)
