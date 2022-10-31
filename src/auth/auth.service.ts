@@ -75,6 +75,7 @@ export class AuthService extends BaseService {
     const payload = {
       sub: user.id,
       email: user.email,
+      id: user.id,
       books
     }
 
