@@ -25,6 +25,9 @@ export class BookService extends BaseService {
         bookId: book.bookId,
         readState: book.readState.toString(),
         userId: user.id,
+        title: book.title,
+        firstAuthor: book.firstAuthor,
+        publishedDate: book.publishedDate
       },
     })
   }

@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsString } from 'class-validator'
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator'
 
 enum ReadState {
   read,
@@ -15,4 +15,16 @@ export class BookDto {
 
   @IsNumber()
   userId: number
+
+  @IsString()
+  @IsOptional()
+  title: string
+
+  @IsString()
+  @IsOptional()
+  publishedDate: string
+
+  @IsString()
+  @IsOptional()
+  firstAuthor: string
 }
