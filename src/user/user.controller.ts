@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Put, UseGuards } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { GetUserFromRequest } from '../decorators'
 import { JwtGuard } from '../auth/guard'
@@ -21,5 +21,10 @@ export class UserController {
     @Body() dto: EditUserDto
   ) {
     return this.userService.updateUser(userEmail, dto)
+  }
+
+  @Delete()
+  deleteUser(@GetUserFromRequest('id') id: number) {
+    return this.userService.deleteUser(id)
   }
 }

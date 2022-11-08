@@ -56,4 +56,23 @@ export class UserService extends BaseService {
       throw new ForbiddenException('Data incorrect')
     }
   }
+
+  async deleteUser(id: number) {
+    try {
+      const deleteBooks = this.prisma.book.deleteMany({
+        where: {
+          userId: id,
+        },
+      })
+      const deleteUser = this.prisma.user.delete({
+        where: {
+          id,
+        },
+      })
+
+      await this.prisma.$transaction([deleteBooks, deleteUser])
+    } catch (error) {
+      throw error
+    }
+  }
 }
