@@ -12,24 +12,15 @@ export class UserService extends BaseService {
   }
 
   async getMe(user: User) {
-    if (await this.checkUserExists(user.email)) {
-      const books = await this.prisma.book.findMany({
-        where: {
-          userId: user.id,
-        },
-      })
-
-      return {
-        books,
-        ...user,
-      }
-    } else {
+    try {
+      return await this.getUser(user.email)
+    } catch (error) {
       throw new ForbiddenException('Data incorrect')
     }
   }
 
   async updateUser(email: string, dto: EditUserDto) {
-    if (await this.checkUserExists(email)) {
+    if (await this.getUser(email)) {
       try {
         const updatedUser = await this.prisma.user.update({
           where: {

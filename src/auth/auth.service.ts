@@ -54,7 +54,7 @@ export class AuthService extends BaseService {
   }
 
   async signin(dto: AuthDto) {
-    const user = await this.checkUserExists(dto.email)
+    const user = await this.getUser(dto.email)
 
     if (!user) throw new ForbiddenException('Credentials incorrect')
 

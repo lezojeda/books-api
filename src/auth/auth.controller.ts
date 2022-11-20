@@ -13,7 +13,7 @@ export class AuthController {
 
   @Post('signup/google')
   async googleSignup(@Body() dto: GoogleAuthDto) {
-    if (!(await this.authService.checkUserExists(dto.email)))
+    if (!(await this.authService.getUser(dto.email)))
       return this.authService.signup(dto)
   }
 
