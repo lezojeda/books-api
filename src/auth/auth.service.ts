@@ -71,12 +71,15 @@ export class AuthService extends BaseService {
     return this.signToken(user, books)
   }
 
-  async signToken(user: User, books: Book[]): Promise<{ access_token: string }> {
+  async signToken(
+    user: User,
+    books: Book[]
+  ): Promise<{ access_token: string }> {
     const payload = {
       sub: user.id,
       email: user.email,
       id: user.id,
-      books
+      books,
     }
 
     const access_token = await this.jwt.signAsync(payload, {

@@ -10,8 +10,8 @@ export class BaseService {
         email,
       },
       include: {
-        books: true
-      }
+        books: true,
+      },
     })
   }
 }

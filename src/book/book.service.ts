@@ -27,7 +27,7 @@ export class BookService extends BaseService {
         userId: user.id,
         title: book.title,
         firstAuthor: book.firstAuthor,
-        publishedDate: book.publishedDate
+        publishedDate: book.publishedDate,
       },
     })
   }
