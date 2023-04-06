@@ -33,9 +33,9 @@ export class GoogleAuthDto {
   @IsEmail({}, { message: 'The e-mail has an incorrect format' })
   email: string
 
-  @IsNotEmpty()
+  @IsOptional()
   firstName: string
 
-  @IsNotEmpty()
+  @IsOptional()
   lastName: string
 }

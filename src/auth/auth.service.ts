@@ -71,6 +71,16 @@ export class AuthService extends BaseService {
     return this.signToken(user, books)
   }
 
+  async googleSignin(user: User) {
+    const books = await this.prisma.book.findMany({
+      where: {
+        userId: user.id,
+      },
+    })
+
+    return this.signToken(user, books)
+  }
+
   async signToken(
     user: User,
     books: Book[]
