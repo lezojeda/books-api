@@ -7,7 +7,7 @@ import {
   MinLength,
 } from 'class-validator'
 
-export class AuthDto {
+export class SignupDto {
   @IsNotEmpty()
   @IsEmail({}, { message: 'The e-mail has an incorrect format' })
   email: string
@@ -26,6 +26,16 @@ export class AuthDto {
   @IsString()
   @MaxLength(30)
   lastName: string
+}
+
+export class SigninDto {
+  @IsNotEmpty()
+  @IsEmail({}, { message: 'The e-mail has an incorrect format' })
+  email: string
+
+  @IsNotEmpty()
+  @IsString()
+  password: string
 }
 
 export class GoogleAuthDto {

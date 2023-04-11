@@ -1,6 +1,13 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Res } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Res,
+} from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { AuthDto, GoogleAuthDto } from './dto'
+import { SignupDto, GoogleAuthDto, SigninDto } from './dto'
 import { Response } from 'express'
 
 @Controller('auth')
@@ -8,7 +15,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signup')
-  signup(@Body() dto: AuthDto) {
+  signup(@Body() dto: SignupDto) {
     return this.authService.signup(dto)
   }
 
@@ -25,7 +32,7 @@ export class AuthController {
 
   @Post('signin')
   @HttpCode(200)
-  signin(@Body() dto: AuthDto): Promise<{ access_token: string }> {
+  signin(@Body() dto: SigninDto): Promise<{ access_token: string }> {
     return this.authService.signin(dto)
   }
 }

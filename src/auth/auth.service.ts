@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common'
-import { AuthDto, GoogleAuthDto } from './dto'
+import { SignupDto, GoogleAuthDto, SigninDto } from './dto'
 import * as argon from 'argon2'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { PrismaService } from '../prisma/prisma.service'
@@ -18,7 +18,7 @@ export class AuthService extends BaseService {
     super(prisma)
   }
 
-  async signup(dto: AuthDto | GoogleAuthDto) {
+  async signup(dto: SignupDto | GoogleAuthDto) {
     let hash: string
     let firstName: string
     let lastName: string
@@ -53,7 +53,7 @@ export class AuthService extends BaseService {
     }
   }
 
-  async signin(dto: AuthDto) {
+  async signin(dto: SigninDto) {
     const user = await this.getUser(dto.email)
 
     if (!user) throw new ForbiddenException('Credentials incorrect')
